@@ -9,7 +9,7 @@ Simple API to showcase CRUD operations using Express JS with Authentication usin
 - Authentication using JWT Tokens with Middlewares
 - Learn how to setup a simple express js api with minimal codebase.
 - Complete Signup/Login Flow.
-- CRUD operations for Notes (GET, POST, PUT, DELETE)
+- CRUD operations for Notes (GET, POST, PUT, DELETE,UPLOAD FILE)
 
 ### 🔗 Links
 [![instagram](https://img.shields.io/badge/instagram-C130AB?logo=instagram&logoColor=f5f5f5)](https://www.instagram.com/sanjayjw/)
