@@ -12,6 +12,5 @@ Simple API to showcase CRUD operations using Express JS with Authentication usin
 - CRUD operations for Notes (GET, POST, PUT, DELETE)
 
 ## 🔗 Links
-[![GitHub](https://img.shields.io/badge/github-blue?logo=github&logoColor=white)]("Thank you for visiting...")
-[![instagram](https://img.shields.io/badge/instagram-blue?logo=instagram&logoColor=f5f5f5)](https://www.instagram.com/sanjayjw/)
+[![instagram](https://img.shields.io/badge/instagram-C130AB?logo=instagram&logoColor=f5f5f5)](https://www.instagram.com/sanjayjw/)
 [![linkedin](https://img.shields.io/badge/linkedin-blue?logo=linkedin)](https://www.linkedin.com/in/sanjaydeveloper/)
