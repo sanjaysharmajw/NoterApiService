@@ -1,9 +1,9 @@
 
-# Notes API  - Express JS
+## Notes API  - Express JS
 
 Simple API to showcase CRUD operations using Express JS with Authentication using JWT Tokens
 
-## Features
+### Features
 
 - Express JS Rest API Setup 
 - Authentication using JWT Tokens with Middlewares
@@ -11,6 +11,6 @@ Simple API to showcase CRUD operations using Express JS with Authentication usin
 - Complete Signup/Login Flow.
 - CRUD operations for Notes (GET, POST, PUT, DELETE)
 
-## 🔗 Links
+### 🔗 Links
 [![instagram](https://img.shields.io/badge/instagram-C130AB?logo=instagram&logoColor=f5f5f5)](https://www.instagram.com/sanjayjw/)
 [![linkedin](https://img.shields.io/badge/linkedin-blue?logo=linkedin)](https://www.linkedin.com/in/sanjaydeveloper/)
