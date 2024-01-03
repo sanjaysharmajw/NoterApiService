@@ -17,38 +17,6 @@ app.use(cors());
 app.use("/users",userRouter);
 app.use("/note",noteRouter);
 app.use("/image",uploadRouter);
-
-
-// //storage
-// const storageDisk = multer.diskStorage({
-//     destination: 'uploads',
-//     filename:(req,file,cb)=>{
-//         cb(null,file.originalname);
-//     }
-
-//   });
-
-//   const uploadingPhotos = multer({
-//         storage: storageDisk
-//   }).single("images")
-
-//   app.post("/upload",(req,res)=>{
-//     uploadingPhotos(req,res,(err)=>{
-//         if(err){
-//             console.log(err);
-//         }else{
-//             const newImage = new imageModel({
-//                 name:req.body.name,
-//                 image:{
-//                     data:req.file.filename,
-//                     contentType: "image/png"
-//                 }
-//             })
-//             newImage.save();
-//             res.status(200).json({message: "Upload Successful"});
-//         }
-//     })
-//   });
   
 
 //debugging
