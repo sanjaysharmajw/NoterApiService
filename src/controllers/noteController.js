@@ -62,9 +62,8 @@ const getNotes = async (req, res) =>{
     try {
         
         const notes = await noteModel.find({userId : req.userId});
-        const data={title:notes.title,description:notes.description};
 
-        res.status(200).json({data: data});
+        res.status(200).json({data: notes});
 
     } catch (error) {
         console.log(error);
