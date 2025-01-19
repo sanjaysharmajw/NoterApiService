@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const userRouter = require("./routes/userRoutes");
 const noteRouter = require("./routes/noteRoutes");
+const newsRouter = require("./routes/newsRoutes");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require('dotenv').config({ path: './src/.env' });
@@ -11,6 +12,7 @@ app.use(cors());
 
 app.use("/users",userRouter);
 app.use("/note",noteRouter);
+app.use("/news",newsRouter);
 
 //debugging
 app.use((req,res,next)=>{
