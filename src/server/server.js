@@ -4,9 +4,16 @@ const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+
+// Use process.env.PORT for Heroku's dynamic port or fallback to 3000 for local development
+const PORT = process.env.PORT || 3000;
+
+// Modify CORS to handle dynamic environments
+const allowedOrigin = process.env.NODE_ENV === 'production' ? 'https://note-socket-4cbc5fb9e19e.herokuapp.com/' : 'http://localhost:your_port';
+
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:your_port",
+    origin: allowedOrigin,
     methods: ["GET", "POST"],
   }
 });
@@ -42,6 +49,6 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log('Server listening on http://localhost:3000');
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
