@@ -1,54 +1,64 @@
 const express = require('express');
 const http = require('http');
-const socketIo = require('socket.io');
+const { Server } = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
-
-// Use process.env.PORT for Heroku's dynamic port or fallback to 3000 for local development
-const PORT = process.env.PORT || 3000;
-
-// Modify CORS to handle dynamic environments
-const allowedOrigin = process.env.NODE_ENV === 'production' ? 'https://your-heroku-app-name.herokuapp.com' : 'http://localhost:3000';
-
-const io = socketIo(server, {
+const io = new Server(server, {
   cors: {
-    origin: allowedOrigin,
-    methods: ["GET", "POST"],
-  }
+    origin: '*', // Allow all origins (adjust for production)
+    methods: ['GET', 'POST'],
+  },
 });
+
+// Store connected users
+const users = {};
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  
-  socket.on('create_room', (roomId) => {
-    console.log('Create room:', roomId);
-    socket.join(roomId);
+  console.log('A user connected:', socket.id);
+
+  // Register user with their socket ID
+  socket.on('register', (userId) => {
+    users[userId] = socket.id;
+    io.emit('userList', Object.keys(users)); // Broadcast updated user list
   });
 
-  socket.on('join_room', (roomId) => {
-    console.log('User joined room:', roomId);
-    socket.join(roomId);
-    socket.to(roomId).emit('user-joined', { socketId: socket.id });
+  // Handle call initiation
+  socket.on('callUser', ({ from, to, offer }) => {
+    const targetSocketId = users[to];
+    if (targetSocketId) {
+      io.to(targetSocketId).emit('incomingCall', { from, offer });
+    }
   });
 
-  socket.on('offer', (data) => {
-    socket.to(data.roomId).emit('offer', data.offer);
+  // Handle call answer
+  socket.on('answerCall', ({ to, answer }) => {
+    const targetSocketId = users[to];
+    if (targetSocketId) {
+      io.to(targetSocketId).emit('callAnswered', { answer });
+    }
   });
 
-  socket.on('answer', (data) => {
-    socket.to(data.roomId).emit('answer', data.answer);
+  // Handle ICE candidate exchange
+  socket.on('iceCandidate', ({ to, candidate }) => {
+    const targetSocketId = users[to];
+    if (targetSocketId) {
+      io.to(targetSocketId).emit('iceCandidate', { candidate });
+    }
   });
 
-  socket.on('ice-candidate', (data) => {
-    socket.to(data.roomId).emit('ice-candidate', data);
-  });
-
+  // Handle disconnection
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    const userId = Object.keys(users).find((key) => users[key] === socket.id);
+    if (userId) {
+      delete users[userId];
+      io.emit('userList', Object.keys(users)); // Update user list
+    }
+    console.log('User disconnected:', socket.id);
   });
 });
 
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
