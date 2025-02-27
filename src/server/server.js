@@ -11,7 +11,6 @@ const io = new Server(server, {
   },
 });
 
-// Store connected users and their media status
 const users = {};
 
 io.on('connection', (socket) => {
@@ -50,13 +49,12 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Handle media status updates
   socket.on('mediaStatus', ({ to, videoOn, audioOn }) => {
     const targetSocketId = users[to]?.socketId;
     if (targetSocketId) {
       io.to(targetSocketId).emit('remoteMediaStatus', { videoOn, audioOn });
     }
-    // Update sender's status
+
     const userId = Object.keys(users).find((key) => users[key].socketId === socket.id);
     if (userId) {
       users[userId].videoOn = videoOn;
